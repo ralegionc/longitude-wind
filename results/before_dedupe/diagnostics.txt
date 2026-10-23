@@ -1,0 +1,53 @@
+POST-HOC DIAGNOSTICS (not pre-registered)
+
+D1 step across a line on the page, in units of each map's RMS error (mean, 95% cluster bootstrap):
+  atlas maps (n=3052)
+    east-west residual across the vertical centre line      n= 2891 +0.018 [+0.009, +0.027]
+    north-south residual across the vertical centre line    n= 2891 -0.002 [-0.007, +0.004]
+    east-west residual across the horizontal centre line    n= 2875 -0.005 [-0.012, +0.002]
+    north-south residual across the horizontal centre line  n= 2875 -0.013 [-0.022, -0.006]
+    east-west residual across a line at 30% of the width    n= 2275 -0.005 [-0.014, +0.004]
+  sheet maps (n=394)
+    east-west residual across the vertical centre line      n=  360 +0.003 [-0.016, +0.026]
+    north-south residual across the vertical centre line    n=  360 +0.002 [-0.018, +0.021]
+    east-west residual across the horizontal centre line    n=  367 +0.005 [-0.010, +0.022]
+    north-south residual across the horizontal centre line  n=  367 -0.006 [-0.023, +0.012]
+    east-west residual across a line at 30% of the width    n=  328 +0.014 [-0.008, +0.038]
+  unknown maps (n=1432)
+    east-west residual across the vertical centre line      n= 1122 +0.001 [-0.016, +0.016]
+    north-south residual across the vertical centre line    n= 1122 -0.001 [-0.015, +0.014]
+    east-west residual across the horizontal centre line    n= 1098 -0.001 [-0.017, +0.014]
+    north-south residual across the horizontal centre line  n= 1098 -0.024 [-0.037, -0.011]
+    east-west residual across a line at 30% of the width    n=  722 +0.005 [-0.019, +0.026]
+
+D2 mean |residual| / RMS by position across the page (x = 0 left edge, 1 right edge):
+        aew                          ans                      
+kind  atlas  other  sheet unknown  atlas  other  sheet unknown
+xb                                                            
+0.05  0.633  0.633  0.661   0.619  0.518  0.512  0.593   0.564
+0.15  0.598  0.592  0.590   0.630  0.527  0.493  0.516   0.532
+0.25  0.565  0.572  0.598   0.585  0.494  0.442  0.488   0.501
+0.35  0.561  0.591  0.638   0.520  0.480  0.465  0.493   0.490
+0.45  0.577  0.555  0.585   0.533  0.484  0.477  0.494   0.495
+0.55  0.584  0.571  0.525   0.554  0.487  0.459  0.464   0.503
+0.65  0.579  0.594  0.564   0.567  0.491  0.453  0.455   0.507
+0.75  0.588  0.621  0.528   0.606  0.499  0.489  0.444   0.507
+0.85  0.597  0.659  0.562   0.650  0.535  0.502  0.468   0.550
+0.95  0.656  0.681  0.636   0.663  0.532  0.567  0.564   0.607
+
+D3 compass or page? Anisotropy measured on the paper along the page axes (A_page) and along
+   the drawn east and north (A_compass), by how far drawn north is tilted from page-up:
+   tilt   0-  5 deg  n= 4153  A_page +0.161 [+0.143, +0.176]   A_compass +0.158 [+0.142, +0.173]
+   tilt   5- 15 deg  n=  683  A_page +0.273 [+0.222, +0.325]   A_compass +0.238 [+0.196, +0.280]
+   tilt  15- 30 deg  n=  147  A_page +0.255 [+0.117, +0.357]   A_compass +0.158 [+0.044, +0.247]
+   tilt  30- 60 deg  n=   73  A_page +0.374 [+0.197, +0.557]   A_compass +0.135 [+0.036, +0.277]
+   tilt  60-120 deg  n=  111  A_page +0.266 [+0.017, +0.508]   A_compass +0.039 [-0.061, +0.142]
+   tilt 120-181 deg  n=   20  A_page -0.118 [-0.476, +0.196]   A_compass -0.137 [-0.396, +0.063]
+
+Descriptive: mean A (and map count) by region and period, primary sample:
+                                     mean                                   count                              
+period                          1450-1649 1650-1749 1750-1849 1850-1950 1450-1649 1650-1749 1750-1849 1850-1950
+group                                                                                                          
+Asia, Africa, Lat. Am., Oceania     0.338     0.285     0.330     0.147        38       128       367       594
+Europe                              0.014     0.023     0.169     0.143       170       333       911       953
+North America                       0.172     0.200     0.297     0.140         7        35       531      1120

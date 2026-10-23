@@ -1,0 +1,24 @@
+ROUND 2, PART C: longitude stretch beyond the projection (maps >= 20 degrees)
+
+C0 synthetic known answers (tolerance: mean ln k error within 0.03 per family; right family >= 70%):
+   bonne     n= 450 mean error +0.0007 (median |err| 0.0082) right family 55%
+   eqdc      n= 450 mean error -0.0019 (median |err| 0.0102) right family 34%
+   equirect  n= 450 mean error -0.0009 (median |err| 0.0097) right family 87%
+   lcc       n= 450 mean error +0.0029 (median |err| 0.0107) right family 39%
+   merc      n= 450 mean error -0.0002 (median |err| 0.0096) right family 90%
+   sinu      n= 450 mean error -0.0021 (median |err| 0.0086) right family 89%
+   stere     n= 450 mean error +0.0003 (median |err| 0.0096) right family 52%
+   overall right family 64%; C0 -> FAIL
+
+maps fitted: 1626; best family counts: bonne 420, sinu 254, eqdc 243, stere 227, merc 206, lcc 159, equirect 117
+plane-chart-like maps (ln k within 0.05 of -ln cos centre latitude): 11
+   1450-1649: maps   55 mean |ln k| 0.153 [0.119, 0.197]  mean ln k +0.058
+   1650-1749: maps  153 mean |ln k| 0.141 [0.116, 0.168]  mean ln k +0.060
+   1750-1849: maps  611 mean |ln k| 0.045 [0.038, 0.053]  mean ln k -0.016
+   1850-1950: maps  807 mean |ln k| 0.048 [0.035, 0.065]  mean ln k +0.002
+
+C1 mean |ln k| 1500-1699 minus 1850-1950: +0.121 [+0.084, +0.154] -> SUPPORTED
+C2 first 25-year bin after which mean |ln k| stays below 0.05: Europe None, elsewhere None -> NOT SUPPORTED
+   Europe bins: 1575:0.076 1625:0.179 1650:0.109 1675:0.206 1700:0.103 1725:0.066 1750:0.046 1775:0.035 1800:0.042 1825:0.017 1850:0.017 1875:0.116 1900:0.030 1925:0.094
+   elsewhere bins: 1575:0.103 1625:0.191 1650:0.165 1675:0.230 1700:0.129 1725:0.099 1750:0.101 1775:0.060 1800:0.049 1825:0.041 1850:0.021 1875:0.038 1900:0.052 1925:0.050
+C3 Mediterranean maps before 1650 (n=15): mean ln k +0.141 [+0.091, +0.225] -> FAIL (needs > 0.1)

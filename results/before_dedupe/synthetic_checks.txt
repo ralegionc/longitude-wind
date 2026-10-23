@@ -1,0 +1,30 @@
+K1a A        primary        n= 5187 mean=+0.018 (se 0.005) target +0.000+-0.03 PASS
+K1a A        extent 2-4     n= 1307 mean=+0.005 (se 0.011) target +0.000+-0.03 
+K1a A        extent 4-8     n= 1817 mean=+0.021 (se 0.009) target +0.000+-0.03 
+K1a A        extent 8-20    n= 1744 mean=+0.006 (se 0.009) target +0.000+-0.03 
+K1a A        extent 20-999  n= 1626 mean=+0.027 (se 0.008) target +0.000+-0.03 
+    lcc          n= 1319 mean A=+0.000  mean S=+0.002
+    merc         n= 1247 mean A=+0.027  mean S=+0.005
+    stere        n= 1314 mean A=+0.025  mean S=-0.000
+    tmerc        n= 1307 mean A=+0.021  mean S=-0.001
+K1b A_paper  primary        n= 5187 mean=+0.027 (se 0.005) target +0.000+-0.03 PASS
+K1b A_paper  extent 2-4     n= 1307 mean=+0.003 (se 0.011) target +0.000+-0.03 
+K1b A_paper  extent 4-8     n= 1817 mean=+0.029 (se 0.008) target +0.000+-0.03 
+K1b A_paper  extent 8-20    n= 1744 mean=+0.033 (se 0.009) target +0.000+-0.03 
+K1b A_paper  extent 20-999  n= 1626 mean=+0.020 (se 0.009) target +0.000+-0.03 
+    aea          n=  772 mean A_paper=+0.008  mean S=+0.003
+    bonne        n=  735 mean A_paper=+0.001  mean S=-0.001
+    cass         n=  713 mean A_paper=+0.017  mean S=-0.006
+    eqdc         n=  725 mean A_paper=+0.003  mean S=+0.001
+    equirect     n=  708 mean A_paper=+0.088  mean S=+0.010
+    platecarree  n=  765 mean A_paper=+0.120  mean S=+0.323
+    sinu         n=  769 mean A_paper=-0.045  mean S=+0.007
+K1c A        primary        n= 5187 mean=+0.663 (se 0.005) target +0.693+-0.1 PASS
+K1c A        extent 2-4     n= 1307 mean=+0.691 (se 0.010) target +0.693+-0.1 
+K1c A        extent 4-8     n= 1817 mean=+0.683 (se 0.009) target +0.693+-0.1 
+K1c A        extent 8-20    n= 1744 mean=+0.680 (se 0.009) target +0.693+-0.1 
+K1c A        extent 20-999  n= 1626 mean=+0.624 (se 0.008) target +0.693+-0.1 
+    lcc          n= 1306 mean A=+0.676  mean S=+0.003
+    merc         n= 1274 mean A=+0.627  mean S=+0.003
+    stere        n= 1315 mean A=+0.677  mean S=-0.000
+    tmerc        n= 1292 mean A=+0.672  mean S=-0.003

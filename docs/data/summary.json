@@ -1,0 +1,33 @@
+{
+ "eras": [
+  {
+   "label": "1450 to 1649",
+   "n_maps": 193,
+   "n_places": 4246,
+   "ratio": 1.089,
+   "median_km": 16.4
+  },
+  {
+   "label": "1650 to 1749",
+   "n_maps": 423,
+   "n_places": 11254,
+   "ratio": 1.11,
+   "median_km": 17.6
+  },
+  {
+   "label": "1750 to 1849",
+   "n_maps": 1755,
+   "n_places": 57405,
+   "ratio": 1.269,
+   "median_km": 8.1
+  },
+  {
+   "label": "1850 to 1950",
+   "n_maps": 2392,
+   "n_places": 80700,
+   "ratio": 1.156,
+   "median_km": 3.5
+  }
+ ],
+ "note": "Before 1750, maps drew longitudes about 15% too wide or too narrow; after 1750, about 4%. Places over 6,000 km from where a map was printed were also misplaced 1.39 times as far east-west as north-south, against 0.98 within 500 km. After 1850 a small excess remains on every map, in two independent volunteer tools; whether it follows the page or the compass is still open."
+}

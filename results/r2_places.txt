@@ -1,0 +1,35 @@
+ROUND 2, PART D: the same places through time
+
+D1 event study: 60 years before vs after the first astronomical longitude (one point per map)
+   Cayenne    1672 (Richer): maps before   0, after   2; median |EW|    nan ->   79.4 km, |NS|    nan ->   14.1 km
+   Alexandria 1694 (Chazelles): maps before  11, after  13; median |EW|   51.4 ->   36.0 km, |NS|   32.7 ->   20.1 km
+   Lima       1709 (Feuillee): maps before   2, after   4; median |EW|   52.8 ->   43.8 km, |NS|   11.2 ->   28.1 km
+   Cape Town  1751 (Lacaille): maps before   3, after   0; median |EW|   91.7 ->    nan km, |NS|  124.3 ->    nan km
+   Tahiti     1769 (Green and Cook): maps before   0, after   0; median |EW|    nan ->    nan km, |NS|    nan ->    nan km
+   places with at least 5 maps each side: Alexandria
+   D1 pooled difference in log ratios (EW minus NS): +0.131 [-1.690, +1.860] -> FAIL (prediction: negative)
+
+   D2 London          maps  201  years 1570-1945
+   D2 Paris           maps  247  years 1548-1950
+   D2 Amsterdam       maps  185  years 1570-1948
+   D2 Lisbon          maps  182  years 1541-1944
+   D2 Rome            maps  225  years 1548-1944
+   D2 Istanbul        maps  316  years 1525-1944
+   D2 Cairo           maps  115  years 1548-1950
+   D2 Alexandria      maps  109  years 1548-1944
+   D2 Cape Town       maps   20  years 1708-1948
+   D2 Mumbai          maps   35  years 1742-1946
+   D2 Jakarta         maps   32  years 1589-1943
+   D2 Guangzhou       maps   29  years 1697-1925
+   D2 Beijing         maps   49  years 1713-1948
+   D2 Nagasaki        maps   13  years 1747-1944
+   D2 Manila          maps   26  years 1659-1935
+   D2 Lima            maps   47  years 1705-1945
+   D2 Mexico City     maps   60  years 1600-1949
+   D2 Havana          maps   94  years 1650-1950
+   D2 Boston          maps  182  years 1675-1950
+   D2 Quebec          maps  159  years 1632-1949
+   D2 Rio de Janeiro  maps   40  years 1662-1950
+   D2 Buenos Aires    maps   63  years 1668-1939
+   D2 Cayenne         maps   33  years 1680-1935
+   D2 Tahiti          maps    0

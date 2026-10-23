@@ -1,0 +1,16 @@
+ROUND 2, PART A: what causes the page excess?
+
+A1 click pairs: 496 on 100 scans
+   A_click (horizontal vs vertical disagreement) +0.243 [+0.037, +0.421]
+   single-click excess variance +5.61e-06 [+1.66e-07, +1.11e-05] (image widths^2)
+   page excess variance of round-1 residuals +5.78e-05 [+2.28e-05, +1.22e-04]
+   share of the page excess that clicking could explain: 0.10
+   -> clicking is anisotropic but too small to explain it
+
+A2 printing method (Rumsey notes), page anisotropy A_page:
+   engraved    n= 1263 median year 1824 mean A_page +0.205
+   lithograph  n=  253 median year 1862 mean A_page +0.201
+   manuscript  n=   61 median year 1829 mean A_page +0.187
+   engraved minus lithograph, 1800-1899 within 50-year bins: -0.047 [-0.127, +0.046]
+   manuscript minus printed, within 50-year bins: -0.018 [-0.134, +0.162]
+   -> consistent with lettering (no difference by method)

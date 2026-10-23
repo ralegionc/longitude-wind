@@ -1,0 +1,29 @@
+ROUND 2, PART B: page term a_p and compass term a_c
+
+B0 synthetic known answers (real layouts and tilts; tolerance 0.04, leak below 0.04):
+   injected a_p 0.2, a_c 0.0: recovered a_p +0.191, a_c +0.004 -> PASS
+   injected a_p 0.0, a_c 0.2: recovered a_p +0.006, a_c +0.180 -> PASS
+   injected a_p 0.2, a_c 0.2: recovered a_p +0.188, a_c +0.195 -> PASS
+   B0 overall: PASS
+
+points 151979 on 4736 maps with |S| < 0.15; local tilt of drawn east: median 2.1 deg, 90th percentile 10.4, share over 10 deg 0.10
+
+By period (a_p page, a_c compass; ratio form exp(atanh a)):
+   1450-1649: maps   163  a_p -0.016 [-0.106, +0.116]  a_c +0.077 [-0.046, +0.175]
+   1650-1749: maps   363  a_p +0.046 [-0.048, +0.144]  a_c +0.084 [-0.008, +0.169]
+   1750-1849: maps  1716  a_p +0.023 [-0.034, +0.098]  a_c +0.160 [+0.084, +0.218]
+   1850-1950: maps  2494  a_p +0.089 [+0.031, +0.151]  a_c +0.042 [-0.013, +0.094]
+   Europe    1450-1749: maps   402  a_p -0.012 [-0.093, +0.093]  a_c +0.090 [-0.006, +0.169]
+   Europe    1750-1849: maps   895  a_p -0.014 [-0.080, +0.097]  a_c +0.152 [+0.039, +0.220]
+   Europe    1850-1950: maps   880  a_p +0.060 [-0.023, +0.148]  a_c +0.047 [-0.035, +0.123]
+   elsewhere 1450-1749: maps   124  a_p +0.194 [+0.097, +0.302]  a_c +0.136 [+0.047, +0.207]
+   elsewhere 1750-1849: maps   821  a_p +0.085 [-0.011, +0.164]  a_c +0.172 [+0.090, +0.265]
+   elsewhere 1850-1950: maps  1614  a_p +0.108 [+0.032, +0.189]  a_c +0.036 [-0.044, +0.108]
+   before 1750, 0-500 km: maps  104  a_p -0.035 [-0.162, +0.138]  a_c +0.112 [-0.068, +0.239]
+   before 1750, 500-2000 km: maps  223  a_p +0.053 [-0.103, +0.197]  a_c +0.037 [-0.100, +0.178]
+   before 1750, 2000-6000 km: maps   58  a_p +0.089 [-0.062, +0.266]  a_c +0.022 [-0.092, +0.118]
+   before 1750, 6000-25000 km: maps   69  a_p +0.229 [+0.137, +0.408]  a_c +0.189 [+0.022, +0.281]
+
+B1 1850-1950: a_p +0.089 [+0.030, +0.150], a_c +0.042 [-0.012, +0.094], a_p - a_c +0.047 [-0.060, +0.157] -> NOT SUPPORTED
+B2 a_c 1500-1749 minus a_c 1850-1950: +0.042 [-0.047, +0.122] -> NOT SUPPORTED
+B3 before 1750, a_c over 2,000 km minus within 500 km: -0.005 [-0.150, +0.188] -> NOT SUPPORTED

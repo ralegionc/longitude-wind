@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Longitude Wind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a full-bleed night map of map errors; one floating panel carries the finding, the legend and the curve. */
+:root {
+  --ink: #0b0e13;          /* the night the errors glow in */
+  --land: #151b25;
+  --panel: rgba(13, 17, 24, 0.9);
+  --rule: #232b37;
+  --text: #ebe6da;
+  --muted: #8f96a1;
+  --ew: #4fd6e8;           /* east-west error */
+  --ns: #f2a65a;           /* north-south error */
+  --mid: #e9e4d8;
+  --eu: #9ad0a3;           /* maps of Europe */
+  --rest: #d7a1e8;         /* maps of everywhere else */
+  --display: "Spectral", Georgia, "Times New Roman", serif;
+  --body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; background: var(--ink); color: var(--text); font: 14px/1.5 var(--body); overflow: hidden; }
+#map { position: absolute; inset: 0; }
+.maplibregl-map { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+.maplibregl-canvas { position: absolute; left: 0; top: 0; }
+.maplibregl-canvas-container.maplibregl-interactive { cursor: grab; }
+.maplibregl-canvas-container.maplibregl-interactive:active { cursor: grabbing; }
+.maplibregl-canvas-container.hovering { cursor: pointer; }
+
+.panel {
+  position: absolute; top: calc(16px + env(safe-area-inset-top, 0px)); left: 16px; width: min(370px, calc(100% - 32px));
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 18px 14px;
+  display: grid; gap: 12px; backdrop-filter: blur(6px); max-height: calc(100% - 32px); overflow-y: auto;
+}
+h1 { font: 700 30px/1 var(--display); margin: 0; letter-spacing: 0.01em; }
+.dek { margin: 0; color: var(--muted); font-size: 13px; text-wrap: pretty; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button {
+  font: 500 12.5px var(--body); color: var(--muted); background: transparent; border: 1px solid var(--rule);
+  border-radius: 999px; padding: 5px 11px; cursor: pointer;
+}
+.tabs button[aria-pressed="true"] { color: var(--ink); background: var(--text); border-color: var(--text); }
+.tabs button:focus-visible { outline: 2px solid var(--ew); outline-offset: 2px; }
+.finding { margin: 0; font-size: 13.5px; text-wrap: pretty; }
+.finding b { font: 500 13px var(--mono); color: var(--ew); }
+.note { margin: 0; color: var(--muted); font-size: 12.5px; text-wrap: pretty; }
+.legend { display: grid; gap: 4px; font-size: 12.5px; }
+.legend span { display: flex; align-items: center; gap: 8px; }
+.legend i { width: 22px; height: 3px; border-radius: 2px; flex: none; }
+.chart { width: 100%; height: auto; }
+.chart text { fill: var(--muted); font: 10px var(--mono); }
+.chart .title { fill: var(--text); font: 500 11.5px var(--body); }
+.credits { margin: 0; color: var(--muted); font-size: 10.5px; line-height: 1.4; }
+.toggle { display: none; }
+
+.card {
+  position: absolute; pointer-events: none; min-width: 220px; max-width: 320px; background: var(--panel);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; display: grid; gap: 4px;
+}
+.card[hidden] { display: none; }
+.card .name { font: italic 500 16px/1.25 var(--display); }
+.card .meta { font: 11.5px var(--mono); color: var(--muted); }
+.card .hint { font-size: 11.5px; color: var(--muted); }
+.loading { position: absolute; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); color: var(--muted); font: 12px var(--mono); }
+
+@media (max-width: 640px) {
+  .panel { top: auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); left: 12px; width: calc(100% - 24px); max-height: 55%; padding: 14px; gap: 10px; }
+  .panel.collapsed .more { display: none; }
+  .toggle { display: inline-block; justify-self: start; font: 500 12px var(--body); color: var(--muted); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+  h1 { font-size: 24px; }
+  .card { left: 12px !important; right: 12px; top: calc(12px + env(safe-area-inset-top, 0px)) !important; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div id="map" aria-label="World map of the errors on dated historical maps"></div>
+
+<section class="panel" id="panel">
+  <h1>The Longitude Wind</h1>
+  <p class="dek">Each streak starts at a real place and points to where a dated map put it, drawn ten times longer than the error. Cyan streaks are east-west errors, amber north-south. Dots are the maps; hover one for its title, click to open it.</p>
+  <div class="tabs" role="group" aria-label="Period">
+    <button data-key="0" aria-pressed="true">1450 to 1649</button>
+    <button data-key="1" aria-pressed="false">1650 to 1749</button>
+    <button data-key="2" aria-pressed="false">1750 to 1849</button>
+    <button data-key="3" aria-pressed="false">1850 to 1950</button>
+  </div>
+  <p class="finding" id="finding">Loading the maps.</p>
+  <button class="toggle" id="toggle" type="button">Show legend and curve</button>
+  <div class="more">
+    <div class="legend">
+      <span><i style="background: var(--ew)"></i>Error mostly east-west</span>
+      <span><i style="background: var(--mid)"></i>Diagonal</span>
+      <span><i style="background: var(--ns)"></i>Error mostly north-south</span>
+    </div>
+    <p class="note" id="note"></p>
+    <svg class="chart" id="chart" viewBox="0 0 320 170" role="img" aria-label="East-west over north-south error by year"></svg>
+    <p class="credits">Georeferencing: Allmaps open data (CC0), ground control points placed by volunteers. Maps and catalogue dates: David Rumsey Map Collection and IIIF library catalogues. Land: Natural Earth.</p>
+  </div>
+</section>
+
+<div class="card" id="card" hidden></div>
+<div class="loading" id="loading">loading</div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+const css = getComputedStyle(document.documentElement);
+const C = k => css.getPropertyValue(k).trim();
+const ERAS = [[1450, 1650], [1650, 1750], [1750, 1850], [1850, 1951]];
+let current = 0, summary = null, curves = null, maps = null;
+const cache = {};
+
+const map = new maplibregl.Map({
+  container: "map", attributionControl: false, dragRotate: false, pitchWithRotate: false, renderWorldCopies: false,
+  style: { version: 8, sources: {}, layers: [{ id: "bg", type: "background", paint: { "background-color": C("--ink") } }] },
+  bounds: [[-150, -50], [165, 72]], fitBoundsOptions: { padding: 20 },
+});
+map.touchZoomRotate.disableRotation();
+
+const orient = ["interpolate", ["linear"], ["get", "o"], 0, C("--ew"), 0.5, C("--mid"), 1, C("--ns")];
+const width = k => ["interpolate", ["linear"], ["zoom"], 1, 0.5 * k, 4, 1.3 * k, 8, 2.6 * k];
+
+map.on("load", () => {
+  map.addSource("land", { type: "geojson", data: "data/land.json" });
+  map.addLayer({ id: "land", type: "fill", source: "land", paint: { "fill-color": C("--land") } });
+  map.addLayer({ id: "coast", type: "line", source: "land", paint: { "line-color": C("--rule"), "line-width": 0.6 } });
+  map.addSource("streaks", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+  map.addLayer({ id: "glow", type: "line", source: "streaks", layout: { "line-cap": "round" },
+    paint: { "line-color": orient, "line-opacity": 0.13, "line-blur": 2.5, "line-width": width(4) } });
+  map.addLayer({ id: "streak", type: "line", source: "streaks", layout: { "line-cap": "round" },
+    paint: { "line-color": orient, "line-opacity": 0.8, "line-width": width(0.7) } });
+  map.addSource("maps", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+  map.addLayer({ id: "maps", type: "circle", source: "maps",
+    paint: { "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2.2, 6, 5],
+             "circle-color": C("--text"), "circle-opacity": 0.55, "circle-stroke-color": C("--ink"), "circle-stroke-width": 0.6 } });
+  map.on("mousemove", "maps", onHover);
+  map.on("mouseleave", "maps", clearHover);
+  map.on("click", "maps", e => { const f = e.features && e.features[0]; if (f) window.open(f.properties.u, "_blank", "noopener"); });
+  Promise.all([fetch("data/summary.json").then(r => r.json()), fetch("data/curves.json").then(r => r.json()),
+               fetch("data/maps.json").then(r => r.json())])
+    .then(([s, c, m]) => { summary = s; curves = c; maps = m; fitWorld(); show(current); });
+});
+
+function fitWorld() {
+  const wide = window.innerWidth >= 640;
+  map.fitBounds([[-150, -48], [165, 72]], {
+    padding: wide ? { top: 30, bottom: 30, right: 30, left: Math.min(410, window.innerWidth * 0.32) } : 10, duration: 0,
+  });
+}
+
+function onHover(e) {
+  const f = e.features && e.features[0];
+  if (!f) return;
+  map.getCanvasContainer().classList.add("hovering");
+  const p = f.properties, card = document.getElementById("card");
+  card.innerHTML = `<div class="name"></div><div class="meta"></div><div class="hint">click to open the map in the Allmaps viewer</div>`;
+  card.querySelector(".name").textContent = p.t || "Untitled map";
+  const k = p.k === undefined ? "" : ` · longitudes drawn ${p.k >= 1 ? Math.round((p.k - 1) * 100) + "% too wide" : Math.round((1 - p.k) * 100) + "% too narrow"}`;
+  card.querySelector(".meta").textContent = `${p.y} · ${p.n} places · typical error ${p.e.toLocaleString("en-GB")} km · east-west / north-south ${p.r.toFixed(2)}${k}`;
+  const x = Math.min(e.point.x + 16, window.innerWidth - 336), y = Math.min(e.point.y + 16, window.innerHeight - 140);
+  card.style.left = x + "px"; card.style.top = y + "px";
+  card.hidden = false;
+}
+function clearHover() {
+  map.getCanvasContainer().classList.remove("hovering");
+  document.getElementById("card").hidden = true;
+}
+
+function show(k) {
+  current = k;
+  document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.key === k)));
+  clearHover();
+  const e = summary.eras[k];
+  document.getElementById("finding").innerHTML =
+    `${e.n_maps.toLocaleString("en-GB")} dated maps, ${e.n_places.toLocaleString("en-GB")} places. ` +
+    `East-west errors ran <b>${e.ratio.toFixed(2)}×</b> the north-south errors; the median place was <b>${Math.round(e.median_km).toLocaleString("en-GB")} km</b> out.`;
+  document.getElementById("note").textContent = summary.note;
+  const [lo, hi] = ERAS[k];
+  map.getSource("maps").setData({ type: "FeatureCollection", features: maps.features.filter(f => f.properties.y >= lo && f.properties.y < hi) });
+  drawChart();
+  const load = d => { map.getSource("streaks").setData(d); document.getElementById("loading").hidden = true; };
+  if (cache[k]) return load(cache[k]);
+  document.getElementById("loading").hidden = false;
+  fetch(`data/streaks_${k}.json`).then(r => r.json()).then(d => { cache[k] = d; if (current === k) load(d); });
+}
+
+function drawChart() {
+  const svg = document.getElementById("chart"), L = 34, R = 8, T = 32, B = 24, Wd = 320 - L - R, H = 170 - T - B;
+  const vals = curves.flatMap(p => [p.lo, p.hi]).filter(Number.isFinite);
+  const ymin = Math.min(-0.1, ...vals), ymax = Math.max(0.6, ...vals);
+  const X = t => L + ((t - 1450) / 500) * Wd, Y = a => T + (1 - (a - ymin) / (ymax - ymin)) * H;
+  const [lo, hi] = ERAS[current];
+  let out = `<rect x="${X(lo)}" y="${T}" width="${X(Math.min(hi, 1950)) - X(lo)}" height="${H}" fill="${C("--rule")}" opacity="0.6"/>`;
+  out += `<line x1="${L}" x2="${L + Wd}" y1="${Y(0)}" y2="${Y(0)}" stroke="${C("--muted")}" stroke-dasharray="2 3"/>`;
+  [1500, 1600, 1700, 1800, 1900].forEach(t => out += `<text x="${X(t)}" y="${T + H + 14}" text-anchor="middle">${t}</text>`);
+  [1, 1.5, 2].forEach(r => { const a = Math.log(r); if (a >= ymin && a <= ymax) out += `<text x="${L - 5}" y="${Y(a) + 3}" text-anchor="end">${r}×</text>`; });
+  for (const [series, col] of [["Europe", C("--eu")], ["rest", C("--rest")], ["all", C("--ew")]]) {
+    const pts = curves.filter(p => p.series === series);
+    if (!pts.length) continue;
+    const d = pts.map((p, i) => (i ? "L" : "M") + X(p.mid).toFixed(1) + "," + Y(p.mean).toFixed(1)).join("");
+    out += `<path d="${d}" fill="none" stroke="${col}" stroke-width="${series === "all" ? 2 : 1.3}" opacity="${series === "all" ? 1 : 0.85}"/>`;
+  }
+  out += `<text class="title" x="${L}" y="12">East-west over north-south error, by year</text>`;
+  out += `<text x="${L}" y="25"><tspan fill="${C("--eu")}">Europe</tspan> <tspan fill="${C("--rest")}">elsewhere</tspan> <tspan fill="${C("--ew")}">all</tspan></text>`;
+  svg.innerHTML = out;
+}
+
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => show(+b.dataset.key)));
+document.getElementById("toggle").addEventListener("click", e => {
+  const p = document.getElementById("panel"), c = p.classList.toggle("collapsed");
+  e.target.textContent = c ? "Show legend and curve" : "Hide legend and curve";
+});
+if (window.innerWidth < 640) document.getElementById("panel").classList.add("collapsed");
+</script>
+
+</body>
+</html>

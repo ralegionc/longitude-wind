@@ -1,0 +1,14 @@
+ROUND 2, PART E: copy lineages and better statistics
+
+E1 map pairs sharing >= 5 places: 192521; null pairs (>= 150 years apart): 22239; null 99th percentile r = 0.672
+   copy pairs: 4688 (2.4%); median r of all pairs 0.079; pairs with r > 0.9: 539
+   lineages: 2421; maps in lineages of 2+: 3250; largest 1402
+   clusters after merging lineages with makers: 631 (makers alone: 1401)
+   largest merged clusters (maps): 4127, 50, 17
+
+E2 H3 slope difference (before 1750 minus after 1850), maker clusters: +0.146 [+0.044, +0.260]
+   with lineages merged into clusters: +0.146 [+0.078, +0.642] -> SUPPORTED
+   post hoc, lineages from r > 0.9 pairs merged with makers (1182 clusters, largest 718 maps): +0.146 [+0.043, +0.259]
+
+E3 mixed model (maker random intercept, atlas variance component): slope difference +0.121 (SE 0.043, p = 0.00466) -> SUPPORTED
+   dof-weighted regression, two-way clustered (maker, atlas): slope difference +0.086 (SE 0.057, p = 0.133)

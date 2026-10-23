@@ -1,0 +1,11 @@
+ROUND 2, PART F: replication on maps round 1 never saw
+
+records read: MapWarper 2185 (dated regional maps with GCPs), new Allmaps 117
+eligible maps (round-1 filters, extent >= 4 degrees): 1172 (1119 MapWarper, 53 new Allmaps)
+by century: 1400s 14, 1500s 43, 1600s 64, 1700s 139, 1800s 540, 1900s 372
+by region: North America 445, Europe 388, Asia 169, Latin America 86, Africa & Middle East 52, Oceania & Pacific 30, Other 2
+
+F1 1850-1950 mean A (n=678): +0.122 [+0.076, +0.165] -> REPLICATED
+F2 outside Europe, mean A before 1850 (n=340) minus after (n=444): +0.032 [-0.050, +0.116] -> NOT REPLICATED
+F3 Europe before 1700 (n=58): mean A +0.024 [-0.154, +0.204] -> REPLICATED (no excess)
+F4 decomposition 1850-1950 (637 maps): a_p -0.043 [-0.163, +0.124], a_c +0.122 [-0.050, +0.253] -> NOT REPLICATED

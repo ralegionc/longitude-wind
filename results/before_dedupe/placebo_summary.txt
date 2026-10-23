@@ -1,0 +1,38 @@
+LONGITUDE WIND: PLACEBO RUN, years shuffled across maps
+Allmaps maps in geometric sample: 11057; with catalogue metadata: 9178
+eligible (dated 1450-1950, precise, not facsimile/view): 8069; fitted with extent >= 2 deg: 6494; primary (extent >= 4 deg): 5187
+primary sample by century: 1400s 1, 1500s 54, 1600s 519, 1700s 726, 1800s 2954, 1900s 933
+primary sample by region: Europe 2367, North America 1693, Asia 559, Africa & Middle East 238, Latin America 235, Oceania & Pacific 77, Other 18
+makers (clusters) in primary sample: 1401
+
+KNOWN-ANSWER CHECKS
+K2 modern floor (1900-1950, |S|<0.15, n=850): mean A +0.165 [+0.125, +0.202]  -> FAIL (|mean| <= 0.10)
+K3 long Mediterranean (maps spanning it: 202; 1477-1650 n=11, 1750-1950 n=166): mean S early +0.047, late +0.014; difference +0.033 [-0.008, +0.083] -> FAIL (>= 0.15)
+K4 Ptolemy maps: only 0 found, not reported (needs 10)
+
+HYPOTHESES (primary sample, 95% cluster-bootstrap CIs over makers)
+H1 mean A 1500-1699 (n=573): +0.166 [+0.129, +0.203]  (EW/NS RMS ratio 1.18)
+   mean A 1850-1950 (n=2712): +0.163 [+0.139, +0.187]  (ratio 1.18)
+   difference: +0.003 [-0.039, +0.047] -> NOT SUPPORTED
+H1t sigmoid: A_late +0.170, dA -1.252, w 20 yr; t_mid 1479 [1450, 1923] -> NOT SUPPORTED: the fitted change is a rise, not a decline
+H2 t_mid Europe 1730 [1467, 1916] (pre-1700 n=257); rest 1501 [1450, 1926] (pre-1700 n=317); difference +230 [-371, +395] -> NOT SUPPORTED (Europe's fitted change is a rise, elsewhere a rise)
+      Africa & Middle East   n=  238 pre-1700   25 A_late +0.297 dA -0.160 t_mid 1852 w 5
+      Asia                   n=  559 pre-1700   61 A_late +0.213 dA +0.176 t_mid 1616 w 5
+      Europe                 n= 2367 pre-1700  257 A_late +0.131 dA -0.034 t_mid 1730 w 5
+      Latin America          n=  235 pre-1700   31 A_late +0.357 dA -0.204 t_mid 1799 w 5
+      North America          n= 1693 pre-1700  193 A_late +0.185 dA +0.050 t_mid 1691 w 5
+      Oceania & Pacific      n=   77 pre-1700    4 A_late +0.138 dA +0.250 t_mid 1686 w 5
+      Other                  n=   18 pre-1700    3 A_late +nan dA +nan t_mid nan w nan
+H3 slope of A on log10 distance from place of publication: before 1750 (n=709) +0.045 [-0.021, +0.111]; after 1850 (n=2418) +0.078 [+0.039, +0.118]; difference -0.034 [-0.104, +0.041] -> NOT SUPPORTED
+S0 Spearman rho(year, RelErr) = -0.012 (p=4.0e-01) -> PASS
+
+ROBUSTNESS (H1 difference early-late; H2 t_mid Europe minus rest)
+primary                    n= 5187  H1 +0.003 [-0.040, +0.044]   H2 +230 [-379, +375]
+R1 |S|<0.15                n= 4736  H1 +0.014 [-0.029, +0.056]   H2 +24 [-386, +354]
+R2 A_paper                 n= 5187  H1 -0.004 [-0.053, +0.041]   H2 +244 [-375, +400]
+R3 region fixed effects    n= 5187  H1 +0.001 [-0.043, +0.042]   H2 +nan [+nan, +nan]
+R4 extent >= 2             n= 6494  H1 +0.008 [-0.028, +0.046]   H2 +35 [-376, +381]
+R4 extent >= 8             n= 3370  H1 -0.016 [-0.066, +0.038]   H2 -88 [-320, +426]
+R5 weighted by dof         n= 5187  H1 -0.012 [-0.049, +0.023]   H2 +67 [-325, +336]
+R6 affine fits only        n= 5187  H1 -0.029 [-0.072, +0.012]   H2 -63 [-354, +282]
+H1 robust (primary + R1 + R3 all exclude 0): NO
